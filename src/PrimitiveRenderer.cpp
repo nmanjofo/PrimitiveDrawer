@@ -49,7 +49,7 @@ bool PrimitiveRenderer::_initDrawers()
 
 void PrimitiveRenderer::addPrimitive(Primitive primitive)
 {
-	_primitiveDrawers[primitive.primitive].second.push_back(primitive);
+	_primitiveDrawers[primitive.primitiveType].second.push_back(primitive);
 }
 
 void PrimitiveRenderer::changeViewport(unsigned int width, unsigned int height)
