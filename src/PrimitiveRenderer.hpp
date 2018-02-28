@@ -19,7 +19,7 @@ public:
 
 	void clear();
 
-	void addPrimitive(Primitive primitive);
+	void addPrimitive(const Primitive& primitive);
 
 	void changeViewport(unsigned int width, unsigned int height);
 

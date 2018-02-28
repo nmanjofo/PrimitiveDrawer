@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LineParams.hpp"
-#include "PrimitiveType.hpp"
+#include "PrimitiveParam.hpp"
 
 struct Primitive
 {
@@ -12,11 +12,7 @@ struct Primitive
 
 	PrimitiveType primitiveType;
 
-	union
-	{
-		LineParams lineParams;
-
-	};
+	std::vector<PrimitiveParam> params;
 };
 
 

@@ -16,8 +16,7 @@
 
 //Project includes
 #include "OrbitalCamera.hpp"	
-
-#include "Tokenizer.hpp"
+#include "PrimitiveParser.hpp"
 #include "PrimitiveRenderer.hpp"
 #include "Console.hpp"
 #include "TokenDescriptors.hpp"
@@ -65,11 +64,6 @@ private:
 
 	bool _readWholeFile(const char* file, std::string& content);
 
-	void _tokenizeLine(std::string line, std::vector<std::string>& tokens);
-	void _splitStringToLines(std::string str, std::vector<std::string>& lines);
-	void _split(std::string str, std::string delimiters, std::vector<std::string>& results);
-		bool _getPrimitiveFromLine(const std::string& line, Primitive& primitive);
-
     //SDL window and OpenGL context
     SDL_Window*          _window;
     SDL_GLContext        _glContext;
@@ -77,7 +71,7 @@ private:
     //Camera
     OrbitalCamera        _camera;
 
-	Tokenizer			 _tokenizer;
+	PrimitiveParser		 _primitiveParser;
 	Console				 _console;
 
 	//Renderer

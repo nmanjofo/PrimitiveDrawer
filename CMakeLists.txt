@@ -25,6 +25,7 @@ set(SRC_FILES
 	src/GLProgram.cpp
 	src/LineDrawer.cpp
 	src/OrbitalCamera.cpp
+	src/PrimitiveParser.cpp
 	src/PrimitiveRenderer.cpp
 	src/ShaderCompiler.cpp
 	src/Tokenizer.cpp
@@ -37,7 +38,9 @@ set(HEADER_FILES
 	src/LineDrawer.hpp
 	src/LineParams.hpp
 	src/OrbitalCamera.hpp
+	src/PrimitiveParser.hpp
 	src/PrimitiveType.hpp
+	src/PrimitiveParam.hpp
 	src/Primitive.hpp
 	src/PrimitiveRenderer.hpp
 	src/ShaderCompiler.hpp

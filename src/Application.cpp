@@ -95,22 +95,22 @@ PrimitiveTokenDescriptor Application::_getLineTokenDescriptor()
 	lineDesc.primitiveType = PrimitiveType::LINE;
 
 	//starting point
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
 
 	//end point
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
 
 	//color
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
 
 	//thickness
-	lineDesc.parameters.push_back(TokenTypes::FLOAT);
+	lineDesc.parameters.push_back(TokenType::FLOAT);
 
 	return lineDesc;
 }
@@ -122,15 +122,15 @@ PrimitiveTokenDescriptor Application::_getPlaneTokenDescriptor()
 	planeDesc.primitiveType = PrimitiveType::PLANE;
 
 	//plane equation
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
 
 	//color
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
-	planeDesc.parameters.push_back(TokenTypes::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+	planeDesc.parameters.push_back(TokenType::FLOAT);
 
 	return planeDesc;
 }
@@ -142,22 +142,22 @@ PrimitiveTokenDescriptor Application::_getCubeTokenDescriptor()
 	cubeDesc.primitiveType = PrimitiveType::CUBE;
 
 	//center point
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
 
 	//extents
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
 
 	//color
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
-	cubeDesc.parameters.push_back(TokenTypes::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
 
 	//wireframe or solid ('w' or 's')
-	cubeDesc.parameters.push_back(TokenTypes::CHAR);
+	cubeDesc.parameters.push_back(TokenType::CHAR);
 
 	return cubeDesc;
 }
@@ -169,27 +169,27 @@ PrimitiveTokenDescriptor Application::_getTriangleTokenDescriptor()
 	triangleDesc.primitiveType = PrimitiveType::TRIANGLE;
 
 	//v1
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
 
 	//v2
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
 
 	//v3
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
 
 	//color
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
-	triangleDesc.parameters.push_back(TokenTypes::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
 
 	//wireframe or solid ('w' or 's')
-	triangleDesc.parameters.push_back(TokenTypes::CHAR);
+	triangleDesc.parameters.push_back(TokenType::CHAR);
 
 	return triangleDesc;
 }
@@ -201,7 +201,7 @@ PrimitiveTokenDescriptor Application::_getOriginTokenDescriptor()
 	originDesc.primitiveType = PrimitiveType::ORIGIN;
 
 	//scale
-	originDesc.parameters.push_back(TokenTypes::FLOAT);
+	originDesc.parameters.push_back(TokenType::FLOAT);
 
 	return originDesc;
 }
@@ -296,9 +296,15 @@ bool Application::Run(int argc, char* argv[])
             }
         }
 
-		if(_console.isLineAvailable())
+		if (_console.isLineAvailable())
 		{
-			
+			Primitive p;
+			_primitiveParser.parsePrimitiveFromLine(_console.getLine(), p);
+
+			if (p.primitiveType == PrimitiveType::UNKNOWN)
+				_console.print("Error while parsing primitive");
+			else
+				_renderer.addPrimitive(p);
 		}
 
         _camera.update();
@@ -345,62 +351,6 @@ bool Application::_processCmdArguments(int argc, char* argv[])
 		if (fileContent == "")
 			return false;
 
-		std::vector<std::string> lines;
-
-		_splitStringToLines(fileContent, lines);
-
-		for(const auto line : lines)
-		{
-			
-		}
-	}
-}
-
-void Application::_split(std::string str, std::string delimiters, std::vector<std::string>& results)
-{
-	_tokenizer.set(str, delimiters);
-	results = _tokenizer.split();
-}
-
-void Application::_splitStringToLines(std::string str, std::vector<std::string>& lines)
-{
-	_split(str, "\n", lines);
-}
-
-void Application::_tokenizeLine(std::string line, std::vector<std::string>& tokens)
-{
-	_split(line, " \t", tokens);
-}
-
-bool Application::_getPrimitiveFromLine(const std::string& line, Primitive& primitive)
-{
-	Primitive p;
-
-	p.primitiveType = PrimitiveType::UNKNOWN;
-
-	std::vector<std::string> tokens;
-	_tokenizeLine(line, tokens);
-
-	if (!tokens.size())
-		return false;
-
-	for(const auto desc : _primitiveDescriptors)
-	{
-		if(tokens[0].compare(desc.primitiveName)==0)
-		{
-			p.primitiveType = desc.primitiveType;
-			break;
-		}
-	}
-
-	const auto desc = _primitiveDescriptors[p.primitiveType];
-
-	if (p.primitiveType == PrimitiveType::UNKNOWN || tokens.size() != (1+desc.parameters.size()))
-		return false;
-
-	
-	for(const auto param : desc.parameters)
-	{
 		
 	}
 }
