@@ -88,6 +88,7 @@ PlaneParams PlaneDrawer::_convertPrimitiveToPlaneParams(const Primitive& primiti
 {
 	PlaneParams plane;
 	plane.plane.equation = glm::vec4(primitive.params[0]._float, primitive.params[1]._float, primitive.params[2]._float, primitive.params[3]._float);
+	plane.plane.toHessianNormalForm();
 	plane.color = glm::vec3(primitive.params[4]._float, primitive.params[5]._float, primitive.params[6]._float);
 	plane.scale = primitive.params[7]._float;
 
@@ -102,7 +103,7 @@ glm::mat4 PlaneDrawer::_getPlaneModelMatrix(const PlaneParams& plane) const
 	const float angleRad = glm::acos(glm::dot(referencePlaneNormal, planeNormal));
 
 	glm::mat4 rotMat;
-	const glm::vec3 rotAxis = /*glm::normalize*/(glm::cross(referencePlaneNormal, planeNormal));
+	const glm::vec3 rotAxis = glm::cross(referencePlaneNormal, planeNormal);
 	if (rotAxis.x == 0 && rotAxis.y == 0 && rotAxis.z == 0)
 		rotMat = glm::mat4();
 	else
