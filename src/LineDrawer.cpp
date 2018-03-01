@@ -25,16 +25,10 @@ LineDrawer::~LineDrawer()
 
 bool LineDrawer::init()
 {
-	assert(glGetError() == GL_NO_ERROR);
-	
 	if (!_initProgram())
 		return false;
 
-	assert(glGetError() == GL_NO_ERROR);
-
 	_initBuffers();
-
-	assert(glGetError() == GL_NO_ERROR);
 
 	return true;
 }
@@ -61,15 +55,20 @@ void LineDrawer::_initBuffers()
 
 void LineDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
+	if (primitive.primitiveType != PrimitiveType::LINE)
+		return;
+
 	const LineParams params = _convertPrimitiveToLineParams(primitive);
-	
+
 	_updateVBO(glm::vec4(params.from, 1), glm::vec4(params.to, 1));
 
 	_lineProgram.bind();
 	_lineProgram.updateUniform("color", params.color);
-	_lineProgram.updateUniform("viewProjectionMatrix", projectionMatrix * viewMatrix);
+	_lineProgram.updateUniform("mvp", projectionMatrix * viewMatrix);
 
 	_drawLine(params.thickness);
+
+	_lineProgram.unbind();
 }
 
 void LineDrawer::_drawLine(float thickness)

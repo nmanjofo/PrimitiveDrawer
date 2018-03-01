@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 
 #include "LineDrawer.hpp"
+#include "PlaneDrawer.hpp"
 
 PrimitiveRenderer::PrimitiveRenderer()
 {
@@ -33,17 +34,27 @@ bool PrimitiveRenderer::init(unsigned int renderWidth, unsigned int renderHeight
 
 	changeViewport(renderWidth, renderHeight);
 
+	glDisable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
 	return _initDrawers();
 }
 
 bool PrimitiveRenderer::_initDrawers()
 {
 	_primitiveDrawers.resize(PrimitiveType::NUM_PRIMITIVE_TYPES);
+	
+	for (unsigned int i = 0; i < PrimitiveType::NUM_PRIMITIVE_TYPES; ++i)
+		_primitiveDrawers[i] = nullptr;
 
 	_primitiveDrawers[PrimitiveType::LINE] = LineDrawer::getInstance();
-	
-	if (!_primitiveDrawers[PrimitiveType::LINE]->init())
-		return false;
+	_primitiveDrawers[PrimitiveType::PLANE] = PlaneDrawer::getInstance();
+
+	for(auto drawer : _primitiveDrawers)
+	{
+		if (drawer != nullptr && !drawer->init())
+			return false;
+	}
 
 	return true;
 }
@@ -68,8 +79,6 @@ void PrimitiveRenderer::onWindowRedraw(const glm::mat4& viewMatrix, const glm::m
 		_primitiveDrawers[primitive.primitiveType]->drawPrimitive(primitive, viewMatrix, projMatrix);
 	}
 }
-
-
 
 
 

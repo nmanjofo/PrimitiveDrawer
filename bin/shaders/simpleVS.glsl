@@ -2,9 +2,9 @@
 
 in vec4 position;
 
-uniform mat4 viewProjectionMatrix;
+uniform mat4 mvp;
 
 void main()
 {
-	gl_Position = viewProjectionMatrix * position;
+	gl_Position = mvp * position;
 }

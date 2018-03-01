@@ -134,6 +134,9 @@ PrimitiveTokenDescriptor Application::_getPlaneTokenDescriptor()
 	planeDesc.parameters.push_back(TokenType::FLOAT);
 	planeDesc.parameters.push_back(TokenType::FLOAT);
 
+	//scale
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+
 	return planeDesc;
 }
 
