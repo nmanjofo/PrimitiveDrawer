@@ -22,6 +22,7 @@ set(SRC_FILES
 	src/AbstractPrimitiveDrawer.hpp
 	src/Application.cpp
 	src/Console.cpp
+	src/CubeDrawer.cpp
 	src/GLProgram.cpp
 	src/LineDrawer.cpp
 	src/OrbitalCamera.cpp
@@ -36,6 +37,8 @@ set(SRC_FILES
 set(HEADER_FILES
 	src/Application.hpp
 	src/Console.hpp
+	src/CubeDrawer.hpp
+	src/CubeParams.hpp
 	src/GLProgram.hpp
 	src/LineDrawer.hpp
 	src/LineParams.hpp
