@@ -28,4 +28,6 @@ protected:
 	bool _initDrawers();
 
 	std::vector<AbstractPrimitiveDrawer*>	_primitiveDrawers;
+
+	std::vector<Primitive>	_primitives;
 };

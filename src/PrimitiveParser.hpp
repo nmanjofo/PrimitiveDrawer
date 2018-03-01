@@ -6,7 +6,7 @@
 #include "TokenDescriptors.hpp"
 #include "Primitive.hpp"
 
-class Parser
+class PrimitiveParser
 {
 public:
 	void setTokenDescriptors(std::vector<PrimitiveTokenDescriptor>& descriptors);

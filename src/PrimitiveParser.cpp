@@ -20,7 +20,10 @@ void PrimitiveParser::parsePrimitiveFromLine(const std::string& line, Primitive&
 	const auto primitiveTokenDesc = _primitiveTokenDescriptors[parsedPrimitive.primitiveType];
 
 	if (parsedPrimitive.primitiveType == PrimitiveType::UNKNOWN || tokens.size() != (1 + primitiveTokenDesc.parameters.size()))
+	{
+		parsedPrimitive.primitiveType = PrimitiveType::UNKNOWN;
 		return;
+	}
 
 	unsigned int index = 0;
 	for (const auto param : primitiveTokenDesc.parameters)
@@ -84,6 +87,7 @@ void PrimitiveParser:: parsePrimitivesFromText(const std::string& multipleLines,
 	{
 		Primitive p;
 		parsePrimitiveFromLine(line, p);
-		parsedPrimitives.push_back(p);
+		if(p.primitiveType!=PrimitiveType::UNKNOWN)
+			parsedPrimitives.push_back(p);
 	}
 }

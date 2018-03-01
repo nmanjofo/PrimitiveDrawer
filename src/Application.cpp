@@ -23,7 +23,10 @@ bool Application::Init()
 
 	_initPrimitiveTypes();
 
-	_renderer.init(SCREEN_WIDTH, SCREEN_HEIGHT);
+	_primitiveParser.setTokenDescriptors(_primitiveDescriptors);
+
+	if (!_renderer.init(SCREEN_WIDTH, SCREEN_HEIGHT))
+		return false;
 
     return true;
 }
@@ -85,7 +88,6 @@ void Application::_initPrimitiveTypes()
 	_primitiveDescriptors[PrimitiveType::PLANE] = _getPlaneTokenDescriptor();
 	_primitiveDescriptors[PrimitiveType::CUBE] = _getCubeTokenDescriptor();
 	_primitiveDescriptors[PrimitiveType::TRIANGLE] = _getTriangleTokenDescriptor();
-	_primitiveDescriptors[PrimitiveType::ORIGIN] = _getOriginTokenDescriptor();
 }
 
 PrimitiveTokenDescriptor Application::_getLineTokenDescriptor()
@@ -194,18 +196,6 @@ PrimitiveTokenDescriptor Application::_getTriangleTokenDescriptor()
 	return triangleDesc;
 }
 
-PrimitiveTokenDescriptor Application::_getOriginTokenDescriptor()
-{
-	PrimitiveTokenDescriptor originDesc;
-	originDesc.primitiveName = "origin";
-	originDesc.primitiveType = PrimitiveType::ORIGIN;
-
-	//scale
-	originDesc.parameters.push_back(TokenType::FLOAT);
-
-	return originDesc;
-}
-
 void Application::clearSDLWindow()
 {
 	SDL_GL_DeleteContext(_glContext);
@@ -228,7 +218,7 @@ void Application::setupCamera(OrbitalCamera& camera)
 
     //Create hypothetical bounding sphere around scene's AABB, d - its radius
     //We will create camera's view frustum around this sphere
-	float r = 50;
+	float r = 10;
     float fovyDeg = 90;
     float fovyRad = glm::radians(fovyDeg);
     float aspectRatio = float(SCREEN_WIDTH) / float(SCREEN_HEIGHT);
@@ -250,13 +240,13 @@ bool Application::Run(int argc, char* argv[])
     if(!Init())
         return false;
 
-	if (!_processCmdArguments(argc, argv))
-		return false;
+	std::vector<Primitive> prims;
+	_loadPrimitivesFromCmdArguments(argc, argv, prims);
+
+	for (const auto p : prims)
+		_renderer.addPrimitive(p);
 
     setupCamera(_camera);
-
-    //Prepare rendering data
-    //TODO
 
     bool quit = false;
     SDL_Event e;
@@ -334,13 +324,10 @@ bool Application::_readWholeFile(const char* file, std::string& content)
 	return true;
 }
 
-bool Application::_processCmdArguments(int argc, char* argv[])
+void Application::_loadPrimitivesFromCmdArguments(int argc, char* argv[], std::vector<Primitive>& primitives)
 {
-	if (argc == 1)
-		return true;
-
-	if (argc > 2)
-		return false;
+	if (argc == 1 || argc > 2)
+		return;
 
 	if(argc==2)
 	{
@@ -349,8 +336,8 @@ bool Application::_processCmdArguments(int argc, char* argv[])
 		_readWholeFile(argv[1], fileContent);
 
 		if (fileContent == "")
-			return false;
+			return;
 
-		
+		_primitiveParser.parsePrimitivesFromText(fileContent, primitives);
 	}
 }

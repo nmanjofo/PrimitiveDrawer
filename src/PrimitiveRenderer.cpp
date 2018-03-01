@@ -21,8 +21,8 @@ void PrimitiveRenderer::onUpdate()
 void PrimitiveRenderer::clear()
 {
 	for (auto drawer : _primitiveDrawers)
-		if (drawer.first != nullptr)
-			delete drawer.first;
+		if (drawer != nullptr)
+			delete drawer;
 
 	_primitiveDrawers.clear();
 }
@@ -44,12 +44,14 @@ bool PrimitiveRenderer::_initDrawers()
 	
 	if (!_primitiveDrawers[PrimitiveType::LINE]->init())
 		return false;
+
+	return true;
 }
 
 
-void PrimitiveRenderer::addPrimitive(Primitive primitive)
+void PrimitiveRenderer::addPrimitive(const Primitive& primitive)
 {
-	_primitiveDrawers[primitive.primitiveType].second.push_back(primitive);
+	_primitives.push_back(primitive);
 }
 
 void PrimitiveRenderer::changeViewport(unsigned int width, unsigned int height)
@@ -61,10 +63,9 @@ void PrimitiveRenderer::onWindowRedraw(const glm::mat4& viewMatrix, const glm::m
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	for(auto drawer : _primitiveDrawers)
+	for(auto primitive : _primitives)
 	{
-		for (auto primitive : drawer.second)
-			drawer.first->drawPrimitive(&primitive, viewMatrix, projMatrix);
+		_primitiveDrawers[primitive.primitiveType]->drawPrimitive(primitive, viewMatrix, projMatrix);
 	}
 }
 

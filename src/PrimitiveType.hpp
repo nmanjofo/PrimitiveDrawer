@@ -6,7 +6,6 @@ enum PrimitiveType : unsigned int
 	TRIANGLE,
 	CUBE,
 	PLANE,
-	ORIGIN,
 	NUM_PRIMITIVE_TYPES,
 	UNKNOWN
 };

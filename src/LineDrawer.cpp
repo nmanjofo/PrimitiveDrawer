@@ -1,6 +1,8 @@
 #include "LineDrawer.hpp"
 #include "LineParams.hpp"
 
+#include "Primitive.hpp"
+
 LineDrawer* LineDrawer::_instance = nullptr;
 
 LineDrawer* LineDrawer::getInstance()
@@ -23,46 +25,51 @@ LineDrawer::~LineDrawer()
 
 bool LineDrawer::init()
 {
+	assert(glGetError() == GL_NO_ERROR);
+	
 	if (!_initProgram())
 		return false;
 
+	assert(glGetError() == GL_NO_ERROR);
+
 	_initBuffers();
+
+	assert(glGetError() == GL_NO_ERROR);
 
 	return true;
 }
 
 bool LineDrawer::_initProgram()
 {
-	return _lineProgram.makeProgram(2, GL_VERTEX_SHADER, "shadres/simpleVS.glsl", GL_FRAGMENT_SHADER, "shaders/simpleFS.glsl");
+	return _lineProgram.makeProgram(2, GL_VERTEX_SHADER, "shaders/simpleVS.glsl", GL_FRAGMENT_SHADER, "shaders/simpleFS.glsl");
 }
 
 void LineDrawer::_initBuffers()
 {
 	glGenVertexArrays(1, &_VAO);
 	glBindVertexArray(_VAO);
-
 	glGenBuffers(1, &_VBO);
-	glNamedBufferData(_VBO, 8 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
 
-	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+	glBufferData(GL_ARRAY_BUFFER, 8 * sizeof(float), nullptr, GL_DYNAMIC_DRAW);
+	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
-
+	
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void LineDrawer::drawPrimitive(void* lineParams, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
+void LineDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
-	const LineParams* params = reinterpret_cast<LineParams*>(lineParams);
-
-	_updateVBO(glm::vec4(params->from, 1), glm::vec4(params->to, 1));
+	const LineParams params = _convertPrimitiveToLineParams(primitive);
+	
+	_updateVBO(glm::vec4(params.from, 1), glm::vec4(params.to, 1));
 
 	_lineProgram.bind();
-	_lineProgram.updateUniform("color", params->color);
-	_lineProgram.updateUniform("viewProjectionMatrix", viewMatrix * projectionMatrix);
+	_lineProgram.updateUniform("color", params.color);
+	_lineProgram.updateUniform("viewProjectionMatrix", projectionMatrix * viewMatrix);
 
-	_drawLine(params->thickness);
+	_drawLine(params.thickness);
 }
 
 void LineDrawer::_drawLine(float thickness)
@@ -88,4 +95,14 @@ void LineDrawer::clear()
 	glDeleteVertexArrays(1, &_VAO);
 }
 
+LineParams LineDrawer::_convertPrimitiveToLineParams(const Primitive& primitive)
+{
+	LineParams p;
+	p.from = glm::vec3(primitive.params[0]._float, primitive.params[1]._float, primitive.params[2]._float);
+	p.to = glm::vec3(primitive.params[3]._float, primitive.params[4]._float, primitive.params[5]._float);
+	p.color = glm::vec3(primitive.params[6]._float, primitive.params[7]._float, primitive.params[8]._float);
+	p.thickness = primitive.params[9]._float;
+
+	return p;
+}
 

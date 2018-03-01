@@ -58,9 +58,8 @@ private:
 		PrimitiveTokenDescriptor _getPlaneTokenDescriptor();
 		PrimitiveTokenDescriptor _getCubeTokenDescriptor();
 		PrimitiveTokenDescriptor _getTriangleTokenDescriptor();
-		PrimitiveTokenDescriptor _getOriginTokenDescriptor();
 
-	bool _processCmdArguments(int argc, char* argv[]);
+	void _loadPrimitivesFromCmdArguments(int argc, char* argv[], std::vector<Primitive>& primitives);
 
 	bool _readWholeFile(const char* file, std::string& content);
 

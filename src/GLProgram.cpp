@@ -9,6 +9,8 @@
 #include <iostream>
 #include <glm/gtc/type_ptr.inl>
 
+#define MAX_UNIFORM_NAME_LENGTH 100u
+
 GLProgram::GLProgram()
 {
 	_program = 0;
@@ -201,12 +203,12 @@ void GLProgram::_getAllUniforms()
 
 	for (int i = 0; i < uniformCount; i++)
 	{
-		char uniformName[20];
+		char uniformName[MAX_UNIFORM_NAME_LENGTH];
 		int size;
 		int length;
 		GLenum type;
 
-		glGetActiveUniform(_program, i, 20, &length, &size, &type, uniformName);
+		glGetActiveUniform(_program, i, MAX_UNIFORM_NAME_LENGTH, &length, &size, &type, uniformName);
 		
 		_uniformMap[std::string(uniformName)] = std::make_pair(i, type);
 	}
