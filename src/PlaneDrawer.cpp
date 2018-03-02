@@ -79,7 +79,7 @@ void PlaneDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& vie
 	_planeProgram.updateUniform("mvp", mvp);
 	_planeProgram.updateUniform("color", plane.color);
 
-	_drawPlane();
+	_drawPlane(plane.isWireframe, plane.lineThickness);
 
 	_planeProgram.unbind();
 }
@@ -91,6 +91,8 @@ PlaneParams PlaneDrawer::_convertPrimitiveToPlaneParams(const Primitive& primiti
 	plane.plane.toHessianNormalForm();
 	plane.color = glm::vec3(primitive.params[4]._float, primitive.params[5]._float, primitive.params[6]._float);
 	plane.scale = primitive.params[7]._float;
+	plane.isWireframe = primitive.params[8]._char == 'w' ? true : false;
+	plane.lineThickness = primitive.params[9]._float;
 
 	return plane;
 }
@@ -116,13 +118,19 @@ glm::mat4 PlaneDrawer::_getPlaneModelMatrix(const PlaneParams& plane) const
 	return translMat * rotMat * scaleMat;
 }
 
-void PlaneDrawer::_drawPlane()
+void PlaneDrawer::_drawPlane(bool isWireframe, float lineThickness)
 {
 	glBindVertexArray(_VAO);
+	if(isWireframe)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glLineWidth(lineThickness);
+	}
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	glBindVertexArray(0);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 
 

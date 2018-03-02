@@ -137,6 +137,12 @@ PrimitiveTokenDescriptor Application::_getPlaneTokenDescriptor()
 	//scale
 	planeDesc.parameters.push_back(TokenType::FLOAT);
 
+	//wireframe or solid ('w' or 's')
+	planeDesc.parameters.push_back(TokenType::CHAR);
+
+	//Line width when rendering as wireframe (neglected when drawing solid)
+	planeDesc.parameters.push_back(TokenType::FLOAT);
+
 	return planeDesc;
 }
 

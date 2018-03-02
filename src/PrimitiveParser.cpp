@@ -16,10 +16,12 @@ void PrimitiveParser::parsePrimitiveFromLine(const std::string& line, Primitive&
 		return;
 
 	parsedPrimitive.primitiveType = _getPrimitiveType(tokens[0]);
+	if (parsedPrimitive.primitiveType == PrimitiveType::UNKNOWN)
+		return;
 
 	const auto primitiveTokenDesc = _primitiveTokenDescriptors[parsedPrimitive.primitiveType];
 
-	if (parsedPrimitive.primitiveType == PrimitiveType::UNKNOWN || tokens.size() != (1 + primitiveTokenDesc.parameters.size()))
+	if(tokens.size() != (1 + primitiveTokenDesc.parameters.size()))
 	{
 		parsedPrimitive.primitiveType = PrimitiveType::UNKNOWN;
 		return;

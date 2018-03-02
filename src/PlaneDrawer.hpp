@@ -23,7 +23,7 @@ protected:
 	PlaneParams _convertPrimitiveToPlaneParams(const Primitive& primitive);
 	glm::mat4 _getPlaneModelMatrix(const PlaneParams& plane) const;
 
-	void _drawPlane();
+	void _drawPlane(bool isWireframe, float lineThickness);
 
 	GLProgram	_planeProgram;
 	GLuint		_VAO;
