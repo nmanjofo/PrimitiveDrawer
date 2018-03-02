@@ -6,6 +6,7 @@ struct CubeParams
 {
 	glm::vec3 centerPoint;
 	glm::vec3 extents;
-	glm::vec2 color;
+	glm::vec3 color;
+	float wireframeLineWidth;
 	bool isWireframe;
 };

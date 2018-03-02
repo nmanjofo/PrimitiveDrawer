@@ -164,6 +164,9 @@ PrimitiveTokenDescriptor Application::_getCubeTokenDescriptor()
 	//wireframe or solid ('w' or 's')
 	cubeDesc.parameters.push_back(TokenType::CHAR);
 
+	//Line width when rendering as wireframe (neglected when drawing solid)
+	cubeDesc.parameters.push_back(TokenType::FLOAT);
+
 	return cubeDesc;
 }
 
