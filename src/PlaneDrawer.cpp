@@ -16,30 +16,12 @@ PlaneDrawer* PlaneDrawer::getInstance()
 	return _instance;
 }
 
-
-PlaneDrawer::PlaneDrawer()
+PlaneDrawer::PlaneDrawer() : AbstractPrimitiveDrawer()
 {
-	_VBO = _VAO = 0;
 }
 
 PlaneDrawer::~PlaneDrawer()
 {
-	clear();
-}
-
-bool PlaneDrawer::init()
-{
-	if (!_initProgram())
-		return false;
-
-	_initBuffers();
-
-	return true;
-}
-
-bool PlaneDrawer::_initProgram()
-{
-	return _planeProgram.makeProgram(2, GL_VERTEX_SHADER, "shaders/simpleVS.glsl", GL_FRAGMENT_SHADER, "shaders/simpleFS.glsl");
 }
 
 void PlaneDrawer::_initBuffers()
@@ -58,12 +40,6 @@ void PlaneDrawer::_initBuffers()
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
-void PlaneDrawer::clear()
-{
-	glDeleteBuffers(1, &_VBO);
-	glDeleteVertexArrays(1, &_VAO);
-}
-
 void PlaneDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 {
 	if (primitive.primitiveType != PrimitiveType::PLANE)
@@ -75,13 +51,13 @@ void PlaneDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& vie
 	
 	glm::mat4 mvp = projectionMatrix * viewMatrix * modelMat;
 
-	_planeProgram.bind();
-	_planeProgram.updateUniform("mvp", mvp);
-	_planeProgram.updateUniform("color", plane.color);
+	_program.bind();
+	_program.updateUniform("mvp", mvp);
+	_program.updateUniform("color", plane.color);
 
 	_drawPlane(plane.isWireframe, plane.lineThickness);
 
-	_planeProgram.unbind();
+	_program.unbind();
 }
 
 PlaneParams PlaneDrawer::_convertPrimitiveToPlaneParams(const Primitive& primitive)

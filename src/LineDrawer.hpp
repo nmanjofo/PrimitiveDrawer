@@ -10,8 +10,6 @@ class LineDrawer : public AbstractPrimitiveDrawer
 {
 public:
 	void drawPrimitive(const Primitive& primitive, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix) override;
-	bool init() override;
-	void clear() override;
 
 	static LineDrawer* getInstance();
 
@@ -19,16 +17,12 @@ protected:
 	LineDrawer();
 	~LineDrawer();
 
-	bool _initProgram();
-	void _initBuffers();
+	void _initBuffers() override;
+
 	void _drawLine(float thickness);
 	LineParams _convertPrimitiveToLineParams(const Primitive& primitive);
 
 	void _updateVBO(const glm::vec4& v1, const glm::vec4& v2);
-
-	GLProgram	_lineProgram;
-	GLuint		_VAO;
-	GLuint		_VBO;
 
 	static LineDrawer* _instance;
 };

@@ -35,6 +35,7 @@ set(SRC_FILES
 )
 
 set(HEADER_FILES
+	src/AbstractPrimitiveDrawer.cpp
 	src/Application.hpp
 	src/Console.hpp
 	src/CubeDrawer.hpp

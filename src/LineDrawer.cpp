@@ -15,27 +15,10 @@ LineDrawer* LineDrawer::getInstance()
 
 LineDrawer::LineDrawer() : AbstractPrimitiveDrawer()
 {
-	
 }
 
 LineDrawer::~LineDrawer()
 {
-	clear();
-}
-
-bool LineDrawer::init()
-{
-	if (!_initProgram())
-		return false;
-
-	_initBuffers();
-
-	return true;
-}
-
-bool LineDrawer::_initProgram()
-{
-	return _lineProgram.makeProgram(2, GL_VERTEX_SHADER, "shaders/simpleVS.glsl", GL_FRAGMENT_SHADER, "shaders/simpleFS.glsl");
 }
 
 void LineDrawer::_initBuffers()
@@ -62,13 +45,13 @@ void LineDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& view
 
 	_updateVBO(glm::vec4(params.from, 1), glm::vec4(params.to, 1));
 
-	_lineProgram.bind();
-	_lineProgram.updateUniform("color", params.color);
-	_lineProgram.updateUniform("mvp", projectionMatrix * viewMatrix);
+	_program.bind();
+	_program.updateUniform("color", params.color);
+	_program.updateUniform("mvp", projectionMatrix * viewMatrix);
 
 	_drawLine(params.thickness);
 
-	_lineProgram.unbind();
+	_program.unbind();
 }
 
 void LineDrawer::_drawLine(float thickness)
@@ -88,11 +71,6 @@ void LineDrawer::_updateVBO(const glm::vec4& v1, const glm::vec4& v2)
 	glNamedBufferData(_VBO, 8 * sizeof(float), arr, GL_DYNAMIC_DRAW);
 }
 
-void LineDrawer::clear()
-{
-	glDeleteBuffers(1, &_VBO);
-	glDeleteVertexArrays(1, &_VAO);
-}
 
 LineParams LineDrawer::_convertPrimitiveToLineParams(const Primitive& primitive)
 {

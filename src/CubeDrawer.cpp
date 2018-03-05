@@ -13,29 +13,12 @@ CubeDrawer* CubeDrawer::getInstance()
 	return _instance;
 }
 
-CubeDrawer::CubeDrawer()
-{
-	
+CubeDrawer::CubeDrawer() : AbstractPrimitiveDrawer()
+{	
 }
 
 CubeDrawer::~CubeDrawer()
 {
-	clear();
-}
-
-bool CubeDrawer::init()
-{
-	if (!_initProgram())
-		return false;
-
-	_initBuffers();
-
-	return true;
-}
-
-bool CubeDrawer::_initProgram()
-{
-	return _program.makeProgram(2, GL_VERTEX_SHADER, "shaders/simpleVS.glsl", GL_FRAGMENT_SHADER, "shaders/simpleFS.glsl");
 }
 
 void CubeDrawer::_initBuffers()
@@ -100,12 +83,6 @@ void CubeDrawer::_initBuffers()
 	assert(glGetError() == GL_NO_ERROR);
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
-void CubeDrawer::clear()
-{
-	glDeleteBuffers(1, &_VBO);
-	glDeleteVertexArrays(1, &_VAO);
 }
 
 void CubeDrawer::drawPrimitive(const Primitive& primitive, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
