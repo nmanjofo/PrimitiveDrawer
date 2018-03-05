@@ -205,6 +205,9 @@ PrimitiveTokenDescriptor Application::_getTriangleTokenDescriptor()
 	//wireframe or solid ('w' or 's')
 	triangleDesc.parameters.push_back(TokenType::CHAR);
 
+	//wireframe line thickness (ignored when solid)
+	triangleDesc.parameters.push_back(TokenType::FLOAT);
+
 	return triangleDesc;
 }
 

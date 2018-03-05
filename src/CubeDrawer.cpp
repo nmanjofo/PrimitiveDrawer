@@ -133,11 +133,8 @@ void CubeDrawer::_drawCube(bool isWireframe, float lineThickness)
 
 	if (isWireframe)
 	{
-		assert(glGetError() == GL_NO_ERROR);
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		assert(glGetError() == GL_NO_ERROR);
 		glLineWidth(lineThickness);
-		assert(glGetError() == GL_NO_ERROR);
 	}
 
 	glDrawArrays(GL_TRIANGLES, 0, 36);

@@ -32,6 +32,7 @@ set(SRC_FILES
 	src/PrimitiveRenderer.cpp
 	src/ShaderCompiler.cpp
 	src/Tokenizer.cpp
+	src/TriangleDrawer.cpp
 )
 
 set(HEADER_FILES
@@ -55,6 +56,8 @@ set(HEADER_FILES
 	src/ShaderCompiler.hpp
 	src/Tokenizer.hpp
 	src/TokenDescriptors.hpp
+	src/TriangleDrawer.hpp
+	src/TriangleParams.hpp
 )
 
 # Set binary output to /bin

@@ -4,6 +4,7 @@
 #include "LineDrawer.hpp"
 #include "PlaneDrawer.hpp"
 #include "CubeDrawer.hpp"
+#include "TriangleDrawer.hpp"
 
 PrimitiveRenderer::PrimitiveRenderer()
 {
@@ -51,6 +52,7 @@ bool PrimitiveRenderer::_initDrawers()
 	_primitiveDrawers[PrimitiveType::LINE] = LineDrawer::getInstance();
 	_primitiveDrawers[PrimitiveType::PLANE] = PlaneDrawer::getInstance();
 	_primitiveDrawers[PrimitiveType::CUBE] = CubeDrawer::getInstance();
+	_primitiveDrawers[PrimitiveType::TRIANGLE] = TriangleDrawer::getInstance();
 
 	for(auto drawer : _primitiveDrawers)
 	{
